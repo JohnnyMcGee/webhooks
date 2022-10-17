@@ -1,8 +1,18 @@
-name: Deploy a Cloud Function
-id: deploy-function
-uses: google-github-actions/deploy-cloud-functions@v0.1.0
-with:
-  name: my-function
-  runtime: nodejs10
-  project: ${{ secrets.gcp_project }}
-  credentials: ${{ secrets.gcp_credentials }}
+name: Deploy Cloud Function
+on:
+  push:
+    branches:
+      - main
+      - workflow
+jobs:
+  Deploy-To-Cloud-Functions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy function
+        id: deploy-function
+        uses: google-github-actions/deploy-cloud-functions@v0.1.0
+        with:
+          name: functions-hello-world
+          runtime: go1.16
+          project_id: ${{ secrets.gcp_project }}
+          credentials: ${{ secrets.gcp_credentials }}
